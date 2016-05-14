@@ -3,429 +3,178 @@
 import UIKit
 
 var str = "Hello, playground"
-class Counter {
+let oddDigits: Set = [1, 3, 5, 7, 9]
+let evenDigits: Set = [0, 2, 4, 6, 8]
 
-    var count = 0
-    //自加
-    func increment()  {
-        count += 1
-        print(count)
-    }
-    //加上指定的值
-    func incrementBy(amount: Int) {
-        count += amount
-        print(count)
-    }
-    //重置
-    func reset() {
-        count = 0
-        print(count)
-    }
-}
-let counter = Counter()
-counter.increment()
-counter.incrementBy(5)
-counter.reset()
+let singleDigitPrimeNumbers: Set = [2, 3, 5, 7]
 
-class AnotherCounter {
+oddDigits.union(evenDigits).sort()
 
-    var count: Int = 0
-    func incrementBy(amount: Int,_ numberOfTimes: Int) {
-        
-        count += amount * numberOfTimes
-        print(count)
-    }
-    
-    func incrementByPramater(amount: Int,numberOfTimes: Int) {
-        
-        count += amount * numberOfTimes
-        print(count)
-    }
+oddDigits.intersect(evenDigits).sort()
 
-    func reset()  {
-        count = 0
-    }
-}
+oddDigits.subtract(singleDigitPrimeNumbers).sort()
 
-let anotherCounter = AnotherCounter()
-anotherCounter.incrementBy(9, 10)
-anotherCounter.reset()
-anotherCounter.incrementByPramater(9, numberOfTimes: 10)
+oddDigits.exclusiveOr(singleDigitPrimeNumbers).sort()
 
-struct Point {
-    var x = 0.0
-    var y = 0.0
-    
-    func isToTheRightOfX(x: Double) -> Bool {
-        //结构体值和枚举是值类型。一般情况下，值类型的属性不能在它的实例方法中被修改
-//        self.x = 9.0
-        return self.x > x
-    }
-}
-let somePoint = Point(x: 4.0, y: 5.0)
-if somePoint.isToTheRightOfX(1.0) {
-    
-    print("This point is to the right of the line where x == 1.0")
-}
+let houseAnimals: Set = ["🐱", "🐶 "]
+let farmAnimals: Set = ["🐑", "🐂", "🐴", "🐷"]
+let cityAnimals: Set = ["🐶", "🐔"]
+farmAnimals.isSubsetOf(farmAnimals)
 
-struct mutPoint {
-    var x = 0.0, y = 0.0
-    
-    mutating func moveByX(deltaX: Double, y deltaY: Double) {
-    
-        x += deltaX
-        y += deltaY
-    }
-}
+farmAnimals.isSubsetOf(houseAnimals)
 
-var mutablePoint = mutPoint(x: 1.0, y: 1.0)
-mutablePoint.moveByX(2.0, y: 3.0)
-print("The point is now at (\(somePoint.x), \(somePoint.y))")
+farmAnimals.isDisjointWith(cityAnimals)
 
-let fixedPoint = mutPoint(x: 3.0, y: 9.0)
-//fixedPoint.moveByX(2.0, y: 3.0)
+var nameOfIntegers = [Int: String]()
+nameOfIntegers = [:]
+nameOfIntegers[16] = "sixteen"
 
-struct TestPoint {
+var airports:[String: String] = ["YYZ": "Baiyun", "DUB": "Dubin"]
+if airports.isEmpty  {
 
-    var x = 0.0, y = 0.0
-    
-    mutating func moveByX(deltaX:Double, y deltaY:Double) {
-    
-        self = TestPoint(x: x + deltaX, y: y + deltaY)
-    }
-}
-
-enum TriStateSwitch {
-    
-    case Off, Low, High
-    
-    mutating func next() {
-        switch self {
-        case Off:
-            self = Low
-        case Low:
-            self = High
-        case High:
-            self = Off
-        }
-    }
-}
-
-var ovenLight = TriStateSwitch.Low
-ovenLight.next()
-ovenLight.next()
-
-struct LeverTracker {
-    
-    static var highestUnlockedLevel = 1
-    //更新解锁等级
-    static func unlockLevel(level: Int) {
-    
-        if level > highestUnlockedLevel {
-            highestUnlockedLevel = level
-        }
-    }
-    //判断某个等级是否有解锁
-    static func levellsUnlocked(level: Int) -> Bool {
-        
-        return level <= highestUnlockedLevel
-    }
-    
-    var currentLevel = 1
-    //实例方法，管理当前的currentLevel是否已经解锁
-    mutating func advanceToLevel(level: Int) ->Bool {
-    
-        if LeverTracker.levellsUnlocked(level) {
-            
-            currentLevel = level
-            return true
-        }else {
-            return false
-        }
-    }
-}
-
-class Player {
-
-    var tracker = LeverTracker()
-    let playerName:String
-    
-    func completedLevel(level:Int) {
-        
-        LeverTracker.unlockLevel(level+1)
-        
-        tracker.advanceToLevel(level + 1)
-    }
-    init(name: String) {
-    
-        playerName = name
-    }
-    
-    class func totalLevel() -> Int{
-    
-       return LeverTracker.highestUnlockedLevel
-    }
-}
-
-var player = Player(name: "Andrew")
-player.completedLevel(3)
-print(LeverTracker.highestUnlockedLevel)
-
-player = Player(name: "Swift")
-if player.tracker.advanceToLevel(6) {
-
-    print("level 6 unlocked")
+    print("The airports dictionary is not empty")
 }else {
 
-    print("level 6 not yet benn unlocked")
-}
-Player.totalLevel()
-
-
-struct TimesTable {
-    
-    let multiplier: Int
-    //下面其实是实现了getter
-    subscript (index: Int) -> Int {
-        return multiplier * index
-    }
+    print("The airports dictionary is not empty")
 }
 
-let threeTimesTable = TimesTable(multiplier: 3)
-print("3的6倍是\(threeTimesTable[6])")
+airports["LHR"] = "London Heathrow"
 
-var numberOfLegs = ["spider":8, "ant": 6, "cat": 4];
-numberOfLegs["bird"] = 2
-numberOfLegs.keys.count
+if let oldValue = airports.updateValue("Doubin Airport", forKey: "DUB"){
 
-struct Matrix {
-    
-   let rows:Int, columns:Int
-    
-    var grid:[Double]
-
-    init(rows: Int, columns: Int) {
-        
-        self.rows = rows
-        self.columns = columns
-        
-        grid = Array(count: rows * columns, repeatedValue: 0.0)
-    }
-    
-    func indexlsValidForRow(row: Int, column: Int) -> Bool {
-        
-        return row >= 0 && row < rows && column < columns
-    }
-    
-    //下标脚本
-    subscript(row: Int, column: Int) ->Double {
-    
-        get {
-        
-            assert(indexlsValidForRow(row, column: column), "index out of range")
-            return grid[(row * columns) + column]
-        }
-        
-        set {
-        
-            assert(indexlsValidForRow(row, column: column), "index out of range")
-            grid[(row * columns) + column] = newValue
-        }
-    }
+    print("The old value for DUB was \(oldValue)")
 }
 
-var matrix = Matrix(rows: 2, columns: 2)
-matrix.grid
+if let airportName = airports["DUB"] {
 
-//下标脚本
-matrix[0, 1] = 1.5
-matrix.grid
-matrix[1, 0] = 3.2
-matrix.grid
+    print("The name of the airport is \(airportName)")
+}else {
 
-//下面的访问时错误的
-//matrix.columns = 3
-//matrix.rows = 3
-//let someValue = matrix[2, 2]
-
-
-class Vehicle {
-
-    var currentSpeed = 0.0
-    //提供一个getter方法
-    var description:String {
-    
-        return "traveling at \(currentSpeed) miles per hour"
-    }
-    
-    func makeNoise() {
-        print("make noise")
-    }
+    print("That airport is not in the airports dictionary")
 }
 
-let someValue = Vehicle()
-print("Vehicle: \(someValue.description)")
+airports["APL"] = "Apple Internation"
+airports["APL"] = nil
 
-class Bicycle: Vehicle {
-    var hasBasket = false
+if let removeValue = airports.removeValueForKey("APL"){
+    print("The removed airport's name is \(removeValue)")
 }
 
-let bicyle = Bicycle()
-bicyle.hasBasket = true
-bicyle.currentSpeed = 15.0
-print("Bicyle: \(bicyle.currentSpeed)")
+for airportCode in airports.keys {
 
-class Tandem: Bicycle {
-    var currentNumberOfPassengers = 0
+    print("airport code: \(airportCode)")
 }
 
-let tandem = Tandem()
-tandem.hasBasket = true
-tandem.currentSpeed = 25.0
-tandem.currentNumberOfPassengers = 2
+for airportName in airports.values {
 
-print("Tandem: \(tandem.description)")
-
-class Train: Vehicle {
-    override func makeNoise() {
-        print("Choo Choo")
-    }
+    print("Airport name :\(airportName)")
 }
 
-let train = Train()
-train.makeNoise()
- class Car: Vehicle {
-    var gear = 1
-    //重写属性的getter方法
-    override var description: String {
-        return super.description + "in gear \(gear)"
-    }
+let airportCodes = Array(airports.keys)
+let airportName = Array(airports.values)
+
+airports = [:]
+
+let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4];
+for (animalName, legCount) in numberOfLegs {
+    
+    print("\(animalName)s have \(legCount) legs")
 }
 
-let car = Car()
-car.currentSpeed = 90.0
-car.gear = 3
-print("Car: \(car.description)", terminator: "")
 
+for index in 1...5 {
 
-class AutomaticCar: Car {
-
-    override var currentSpeed: Double {
-        didSet {
-        
-            gear = Int(currentSpeed / 10.0) + 1
-        }
-    }
+    print("\(index) times 5 is \(index * 5)")
 }
 
-let automatic = AutomaticCar()
-automatic.currentSpeed = 110
-print("AutomicCar: \(automatic.description)")
-
-struct Fahrenheit {
-    var temperature: Double
-    init () {
-    
-        temperature = 32.0
-    }
+let base = 3
+let power = 10
+var answer = 1
+for _ in 1...power {
+    answer *= base
 }
 
-var f = Fahrenheit()
-print("The default temperature is \(f.temperature) Fahrenheit")
+print("\(base) to the power of \(power) is \(answer)")
+let names = ["Anna", "Alex", "Brian", "Jack"]
+for name in names {
 
-
-struct Celsius {
-
-    var temperatureCelsius:Double
-    //fromFahrenheit: 外部名，fahrenheit：内部名
-    init(fromFahrenheit fahrenheit:Double) {
-    
-        temperatureCelsius = (fahrenheit - 32.0) / 1.8
-        print("celsiur from Fahrenheit \(temperatureCelsius)")
-    }
-
-    init(fromKelvin kelvin: Double) {
-    
-        temperatureCelsius = kelvin - 273.15
-        print("celsius from Kelvin \(temperatureCelsius)")
-    }
+    print("Hello, \(name)!")
 }
 
-let boilingPointOfWater = Celsius(fromFahrenheit: 212.0)
-let freezingPointOfWater = Celsius(fromKelvin: 273.15)
+let finalSquare = 25
+var board = [Int](count: finalSquare + 1, repeatedValue: 0)
+board[03] = +08; board[06] = +11; board[09] = +09;
+board[10] = +02
+board[14] = -10; board[19] = -11; board[22] = -02;
+board[24] = -08
 
 
-struct Color {
-    
-    let red, green, blue:Double
-    
-    init(red: Double, green: Double, blue: Double) {
-    
-        self.red = red
-        self.blue = blue
-        self.green = green
-    }
-    
-    init(white: Double) {
-    
-        red = white
-        green = white
-        blue = white
-    }
-    
-//    init(white: Double) {
-//        
-//        self.red = white
-//        self.green = white
-//        self.blue = white
-//    }
-}
+var square = 0
+var diceRoll = 0
 
-let magenta = Color(red: 1.0, green: 0.0, blue: 1.0)
-//有外部变量名而不写的话，会报错
-//let halfGray = Color(0.5)
-let halfGray = Color(white: 0.5)
+while square < finalSquare {
 
-struct AnotherCelsius {
-    var temperature:Double = 0.0
-    init(fromFahrenheit fahrenheit: Double) {
+    diceRoll += 1
     
-        temperature = (fahrenheit - 32.0) / 1.8
+    if diceRoll == 7 {
+    
+        diceRoll = 1
     }
+    square += diceRoll
+    if square < board.count {
     
-    init(fromKelvin kelvin: Double) {
-    
-        temperature = kelvin - 273.15
-    }
-    
-    init(_ anotherCelsius: Double) {
-        temperature = anotherCelsius
+        square += board[square]
     }
 }
+print("game over !")
 
-let bodyTemperture = AnotherCelsius(37.0)
+square = 0
+diceRoll = 0
 
-
-class SurveyQustion {
+repeat {
     
-    let text: String
+    square += board[square]
+    diceRoll += 1
+    if diceRoll == 7 {
     
-    var response:String?
-    
-    init(text: String) {
-        
-        self.text = text
+        square += diceRoll
     }
-    
-    func ask() -> String {
-    
-        return text
-    }
+
+}while square < finalSquare
+print("Game over !")
+
+
+var temperature = 30
+if temperature <= 32 {
+
+print("is code ")
 }
 
-let beetsQustion = SurveyQustion(text: "How about beets")
-beetsQustion.ask()
-beetsQustion.response = "I like beets"
+let someCharacter: Character = "e"
+switch someCharacter {
+
+    case "a", "e", "i", "o", "u":
+    
+    print("\(someCharacter) is a vowel")
+    
+    case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q","r", "s", "t", "v", "x", "w", "y", "z":
+    print("\(someCharacter) is a consonant")
+    
+default:
+    print("\(someCharacter) is not a vowel or a consonant")
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

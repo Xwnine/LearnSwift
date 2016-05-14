@@ -3,224 +3,144 @@
 import UIKit
 
 var str = "Hello, playground"
-enum CompassPoint {
 
-    case North
-    case South
-    case East
-    case West
+let exclamtionMark :String = str
+var welcome = "hello word !"
+welcome.appendContentsOf(str)
+let count = welcome.characters.count
+welcome.rangeOfString("hello")
+
+
+let multiplier = 3
+let message = "\(multiplier) times 2.5 \(Double (multiplier) * 2.5)"
+print(message)
+
+let eAcute: Character = "\u{E9}"
+let combinedEAcute: Character = "\u{65}\u{301}"
+//let regionalIndicatoeForUS: Character = "\u{1F1A} \u{1F1F8}"
+
+let unusualMenagrie = "Koala, Snail, Penguin, Dromedary "
+print(unusualMenagrie.characters.count)
+
+var word = "cafe"
+print("the number of characters in \(word) is \(word.characters.count)")
+word += "\u{301}"
+
+let greeting = "Guten Tag"
+greeting[greeting.startIndex]
+greeting[greeting.endIndex.predecessor()]
+greeting[greeting.startIndex.successor()]
+
+
+let index = greeting.startIndex.advancedBy(7)
+greeting[index]
+//拿到对应的下标
+greeting.startIndex.successor()
+greeting.endIndex.predecessor()
+
+
+//越界
+//greeting[greeting.endIndex]
+//greeting.endIndex.successor()
+
+for index in greeting.characters.indices {
+
+    print("\(greeting[index]) ", separator: "")
 }
 
-enum Planet {
-    case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
+var welcomeStr = "hello"
+welcomeStr.insert("！", atIndex: welcomeStr.endIndex)
+
+welcomeStr.insertContentsOf(" there".characters, at: welcomeStr.endIndex.predecessor())
+
+welcomeStr.removeAtIndex(welcomeStr.endIndex.predecessor())
+print(welcomeStr)
+
+let range = welcomeStr.endIndex.advancedBy(-6)..<welcomeStr.endIndex
+welcomeStr.removeRange(range)
+
+let quotation = "We're a lot alike, you and i"
+let sameQuotation = "We're a lot alike, you and I."
+
+
+if quotation == sameQuotation {
+
+    print("Thess two string are considered equal")
+}else if quotation != sameQuotation {
+
+    print("not equal ")
 }
 
-var directtionToHead = CompassPoint.West
-directtionToHead = .East
-//directionToHead type of CompassPoint
-//directtionToHead = Plent.Earth
+//俄语和英语中的字符 A 不是一个意思。如果两个字符串（或者两个字符）的可扩展的字形群集是标准相等的，那么就认为它们是相等的。在这个情况下，即使可扩展的字形集群是有不同的Unicode标量构成的，只要它们有同样的语言意义和外观，就认为它们是标准相等的。
+let eAcuteQuestion = "Voulez-vous un caf\u{E9}"
+let combinedEAcuteQuestion = "Voulez-vous un caf\u{65}\u{301}?"
+if eAcuteQuestion == combinedEAcuteQuestion {
 
-directtionToHead = .South
-
-switch directtionToHead {
-    
-    case .North:
-        print("Lots of plantes have a north")
-    case .South:
-        print("Watch out for penguins")
-    case .East:
-        print("Where the sun rises")
-    case .West:
-        print("Where the skies are blue")
-    default:
-        break
-}
-let somePlanet = Planet.Earth
-
-switch somePlanet {
-
-    case .Earth:
-        print("\(somePlanet) is mostly harmless")
-    default:
-        print("\(somePlanet) isn't safe for humans")
+     print("these equal ")
 }
 
-//给枚举成员关联值
-enum BarCode {
-    
-    case UPCA(Int, Int, Int, Int)
-    case SCode(String)
+let latinCaptilLetterA: Character = "\u{41}"
+let cyrillicCaptilLetterA: Character = "\u{0410}"
+
+if latinCaptilLetterA != cyrillicCaptilLetterA {
+    print("These two characters are not equal")
 }
 
-var productBarCode = BarCode.UPCA(8, 85909, 51226, 3)
-productBarCode = .SCode("ABCD QRCode")
+let romeAndJuliet = [
 
-//提取每个成员的每个关联值作为一个常量
-switch productBarCode {
-    case .UPCA(let numberSystem, let manufacture, let product, let check):
-        print("UPC-A: \(numberSystem), \(manufacture), \(product), \(check)")
-        
-    case .SCode(let productCode):
-        print("QR Code: \(productCode)")
+    "Act 1 Scene 1: Verona, A public place",
+    "Act 1 Scene 2: Capulet's mansion",
+    "Act 1 Scene 3: A room in Capulet's mansion",
+    "Act 1 Scene 4: A street outside Capulet's mansion",
+    "Act 1 Scene 5: Outside Capulet's mansion",
+    "Act 2 Scene 1: Capulet's orchard",
+    "Act 2 Scene 2: The Greate hall in Capulet's mansion",
+    "Act 2 Scene 3: Outside Firar Lawrence's cell",
+    "Act 2 Scene 4: Firar Lawrence's cell",
+    "Act 2 Scene 5: Capulet's mansion"
+]
 
-}
+var act1SenceCount = 0
+for scene in romeAndJuliet {
 
-//枚举成员的所有关联值都被提取为常量，或者都被提取为变量，为了简洁，可以在成员名称之前标注一个let 或者var
-switch productBarCode {
-    case let .UPCA(numberSys, manuf, product, check):
-        print("\(numberSys), \(manuf), \(product), \(check)")
-    case let .SCode(productBarCode):
-        print("\(productBarCode)")
-}
-
-//枚举成员的原始值，需要制定原始值的type
-enum ASCIIControlCharacter:Character {
-    
-    case Tab = "\t"
-    case LineFeed = "\n"
-    case CarriageReturn = "\r"
-}
-//省略原始值
-enum PlanetWithValue:Int {
-
-    case Mercury = 1, Venus, Earth, Mars, Jupiter, Saturm, Uranus, Neptune
-}
-
-enum CompassValue :String {
-    case North, South, East, West
-}
-
-let earthOrder = PlanetWithValue.Earth.rawValue
-let sunestDirection = CompassValue.West.rawValue
-//取到的值是一个optional的，可能会为nil
-let possibleValue = PlanetWithValue(rawValue: 7)
-
-
-let positionToFind = 9
-if let somePlanet = PlanetWithValue(rawValue:positionToFind) {
-    switch somePlanet {
-        case .Earth:
-            print("Mostly harmlwss")
-        default:
-            print("Not a safe place for humans")
-    }
-}else {
-    print("There isn't a planet at position \(positionToFind)")
-}
-
-enum AirthmeticExpression {
-    case Number(Int)
-    indirect case Addition(AirthmeticExpression, AirthmeticExpression)
-    indirect case Multiplication(AirthmeticExpression, AirthmeticExpression)
-}
-
-//所有枚举成员都可是可递归的
-indirect enum MathteicExpression {
-    case Number (Int)
-    case Addition(MathteicExpression, MathteicExpression)
-    case Multiplication(MathteicExpression, MathteicExpression)
-}
-
-/**
- 根据给定的参数返回对应的数学计算结果
- 
- - parameter expression: MatheicExpression
- 
- - returns: Int
- */
-func evaluate(expression: MathteicExpression) -> Int {
-    switch expression {
-        case .Number(let value):
-            return value
-        case .Addition(let left, let right):
-            return evaluate(left) + evaluate(right)
-        case .Multiplication(let left, let right):
-            return evaluate(left) * evaluate(right)
+    if scene.hasPrefix("Act 1") {
+        act1SenceCount += 1
     }
 }
 
-//计算（5 + 4）* 2
-let five = MathteicExpression.Number(5)
-let four = MathteicExpression.Number(4)
-let sum =  MathteicExpression.Addition(five, four)
-let product = MathteicExpression.Multiplication(sum, MathteicExpression.Number(2))
+print("There are \(act1SenceCount) scene in Act 1")
 
-print("sunm")
-print(evaluate(four))
-print(evaluate(sum))
-print(MathteicExpression.Number(10))
-print(evaluate(MathteicExpression.Number(20)))
-print(evaluate(MathteicExpression.Addition(MathteicExpression.Number(1), MathteicExpression.Number(9))))
-print(evaluate(product), terminator: "")
+var mansionCount = 0
+var cellCount = 0
+for scene in romeAndJuliet {
 
-
-class SomeClass {
-    var resolution = Resolution()
-    var interlaced = false
-    var frameRate = 0.0
-    var name:String?
+    if scene.hasSuffix("Capulet's mansion") {
+    
+        mansionCount += 1
+    }else if scene.hasSuffix("cell") {
+    
+        cellCount += 1
+    }
 }
 
-struct Resolution {
-    var width = 0
-    var height = 0
+
+let dogString = "Dog !!🐶"
+for codeUint in dogString.utf8 {
+
+    print("\(codeUint) ", terminator: "")
 }
+print("")
 
-let videoMode = SomeClass()
-let videoResoltion = Resolution()
-videoMode.resolution = videoResoltion
-print("The width of videoResoltion is \(videoResoltion.width)")
-print("The width of videoMode is \(videoMode.resolution.width)")
-videoMode.resolution.width = 1280
+for codeUint in dogString.utf16 {
 
-print("The width of videoMode is \(videoMode.resolution.width)")
-//结构体成员的逐一构造
-let vga = Resolution(width: 640, height: 720)
-let hd = Resolution(width: 1920, height: 1080)
-//cinema是hd的一个副本并非hd本身,
-var cinema = hd
-print("cinema width \(cinema.width)")
-cinema.width = 2048
-print("cinema width \(cinema.width)")
+    print("\(codeUint) ", terminator: "")
+}
+print("")
 
-//拷贝的过程中，实际上是将该hd中所存储的值进行拷贝，然后将拷贝的数据存储到新的cinema中。结果就是连个完全独立的实例。
-var hdCopy = Resolution(width: 1920, height: 1080)
-cinema = hdCopy
-print("cinema width \(cinema.width)")
-hdCopy.width = 0
-print("cinema width \(cinema.width)")
+for scalar in dogString.unicodeScalars {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    print("\(scalar) ")
+}
 
 
 

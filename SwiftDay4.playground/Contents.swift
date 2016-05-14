@@ -4,170 +4,190 @@ import UIKit
 
 var str = "Hello, playground"
 
-func greet(person:[String:String]) {
-    
-//判断可选绑定值是否有值，如果没有值就去执行else {}后面的操作
-    guard let name = person["name"] else {
-    
-        return
-    }
-    
-    print("Hello \(name)")
-    guard let location = person["location"] else {
-    
-        print("i hope the weather is nice near you .")
-        return
-    }
-    print("I hope the weather is nice in \(location).")
+var someString = ""
+var anotherString = String();
 
+if someString.isEmpty {
+
+    print("Nothing to see here")
 }
-//greet(["name": "John"])
-greet(["name":"Jane", "location":"Cupertion"])
+
+var mutString = "Horse"
+mutString += "and carriage"
+print(mutString)
+
+let contentString = "Highander"
+//contentString += "and another value"
+
+for char in "Dog!🐶".characters {
+    print(char)
+}
+
+let exclamationMark:Character = "!"
+let catCharacters:[Character] = ["C", "a", "t", exclamationMark, "🐱"];
+
+let catString = String(catCharacters)
+print(catString)
+
+let string1 = "hello"
+let string2 = "world"
+
+var welcome = string1 + string2 + catString
+welcome += str
+welcome += "!"
+welcome.append(exclamationMark)
+welcome.rangeOfString(catString)
+
+let range = welcome.endIndex.predecessor().advancedBy(-6)..<welcome.endIndex
+welcome.removeRange(range)
+
+let index = welcome.endIndex.predecessor().advancedBy(-8)
+welcome.removeAtIndex(index)
+print(welcome)
+
+//创建一个空的数组
+var someInts = [Int]();
+print("SomeInts is of type[Int] with \(someInts.count) items")
+
+someInts.append(3)
+let count = someInts.count
+//清空数组，但是someInts数组仍然是[Int]类型的
+someInts = []
+//创建一个带有默认值的数组
+var threeDouble = [Double](count: 3, repeatedValue: 0.0)
+var anotherThreesDouble = Array(count: 3,repeatedValue: 2.5)
+
+var sixDouble = threeDouble + anotherThreesDouble
+sixDouble = anotherThreesDouble + threeDouble
+sixDouble.append(5)
+
+let numberString = "123.09"
+sixDouble.append((numberString as NSString).doubleValue)
+
+sixDouble.append(Double(numberString)!)
 
 
-if #available(iOS 9, OSX 10.10,*) {
+//let numFromString: Double = Double(numberString)!
+//let numFromString = Double(numberString)!
+let numFromString = Double(numberString)
 
-    print("the latest version")
+
+sixDouble.append(numFromString!)
+
+var shoppingList = ["Eggs", "Milk"]
+shoppingList.append(str)
+
+var list = ["eggs", "milk"];
+list.append(str)
+if list.isEmpty {
+
+    print("list contain something")
 }else {
 
-    print("please update you os version")
+    print("list is empty")
+}
+shoppingList += ["Baking Powder"]
+var firstItme = shoppingList[0]
+shoppingList[0] = "Six eggs"
+
+shoppingList += ["Four", "Three","two"]
+shoppingList[4...6] = ["Bannas", "Apples"]
+let shopCount = shoppingList.count
+
+shoppingList.insert("Maple Syrup", atIndex: 0)
+
+let mapleSyrup = shoppingList.removeAtIndex(0)
+print(mapleSyrup)
+
+firstItme = shoppingList[0]
+let apples = shoppingList.removeLast()
+print(apples)
+print("shopList count is \(shoppingList.count)")
+
+for item in shoppingList {
+
+    print(item)
 }
 
-func sayHello(personName:String) -> String {
+//枚举器来遍历数组.返回一个元祖
+for (index, value) in shoppingList.enumerate() {
 
-    let greeting = "Hello," + personName + "!"
-    return greeting
+    print("item \(String(index + 1)): \(value)")
+    print(index, value)
 }
 
-func sayHelloAgain(personName:String) ->String {
+//集合
+var letters = Set<Character>()
+let lenght = letters.count
+letters.insert("a")
+print(letters.count)
 
-    let greeting = "Hello Again," + personName + "!"
-    return greeting
-    
+letters = []
+print(letters.count)
+
+letters = ["a"]
+letters.removeAll()
+
+//当set中的元素类型都是一样的时候，即使用数组字面量来初始化一个set.swift是可以推断出来favoriteGenres的正确类型为 Set<String>
+var favoriteGenres: Set<String> = ["Rock", "Classical", "Soul", "Hip hop"]
+//var favoriteGenres: Set = ["Rock", "Classical", "Soul", "Hip hop"] 与上面的是等价的
+
+let setCount = favoriteGenres.count
+
+if favoriteGenres.isEmpty {
+
+    print("set has nothing")
+}else {
+
+    print(favoriteGenres.first)
 }
 
-func sayHelloWorld() ->String {
+favoriteGenres.insert("Jazz'")
 
-    return "Hello , world"
+if let removedGame = favoriteGenres.remove("Rock") {
+
+    print(removedGame)
+} else if favoriteGenres.contains("Funk") {
+
+    print(" funky")
+}else {
+
+    print("I am not funky")
 }
 
-func sayGoodbye(personName:String) {
-    print("Goodbye, \(personName)")
-}
+for gene in favoriteGenres {
 
-func sayHello(personName:String, alreadyGreeted:Bool) -> String {
-    if alreadyGreeted {
-        return sayHelloAgain(personName)
-    }else {
-    
-        return sayHello(personName)
-    }
+    print("\(gene)")
 }
+//按照特定顺序来遍历一个Set
+for gener in favoriteGenres.sort() {
 
-func printAndCount(stringToPrint:String) -> Int {
-    print(stringToPrint)
-    
-    return stringToPrint.characters.count
-}
-
-func printWithoutCount(stringToPrint:String) {
-    
-    printAndCount(stringToPrint)
-}
-
-//传入一个[Int]型的数组，返回一个元祖
-func minMax(array:[Int]) -> (min:Int, max:Int) {
-    
-    var currentMin = array[0]
-    var currentMax = array[0]
-    for value in array {
-        if value < currentMin {
-            currentMin = value
-        }else if value > currentMax {
-            currentMax = value
-        }
-    }
-    return (currentMin, currentMax)
-}
-
-//判断数组为空的情形
-func minMaxSafe(array:[Int]) -> (min:Int, max:Int)? {
-    
-    if array.isEmpty {
-        return nil
-    }
-    var currentMin = array[0]
-    var currentMax = array[0]
-    for value in array {
-        if value < currentMin {
-            currentMin = value
-        }else if value > currentMax {
-            currentMax = value
-        }
-    }
-    return (currentMin, currentMax)
-}
-
-func someFunction(firstParameterName:Int, secondParameterName:Int) {
-    print(firstParameterName)
-    print(secondParameterName)
-}
-
-//指定函数的外部参数名字
-func someFunction(externalParameterName localParamterName: Int) {
-    print(localParamterName)
-}
-
-func sayHellpo(to person:String, and anotherPerson:String) -> String {
-    return "Hello \(person) and \(anotherPerson)!"
+    print("\(gener)")
 }
 
 
-func someFunction(firstParameter:Int, _secondParameterName:Int) {
-
-    print(firstParameter)
-    print(_secondParameterName)
-    print(firstParameter + _secondParameterName)
-}
-//下划线+空格，忽略第二个参数名称
-func someFunction(firstParameter:Int, _ secondParameterName:Int) {
-    
-    print(firstParameter)
-    print(secondParameterName)
-    print(firstParameter + secondParameterName)
-}
-
-func someFunction(parameterWithDefault:Int = 12) {
-    
-    print(parameterWithDefault)
-    
-}
-
-//函数的可变参数
-func arithmeticMean(numbers:Double...) -> Double {
-    var total:Double = 0
-    for number in numbers {
-    
-        total += number
-    }
-    return total/Double(numbers.count)
-}
 
 
-print(sayHello("Zubo Wu"))
-print(sayHello("CJJ"), terminator:"")
-print(sayHelloWorld(), terminator:"")
-print(sayHello("Time", alreadyGreeted: false), terminator:"")
-let bounds = minMax([8, 9, -12, 109, 90, 2, 71, -2])
-print("min is \(bounds.min), max is \(bounds.max)", terminator: "")
-someFunction(1, secondParameterName: 2)
-someFunction(externalParameterName: 3)
-print(sayHellpo(to: "Bill", and: "Ted"), terminator:"")
 
-someFunction(1, 2)
-//someFunction(1, _secondParameterName: 2)
 
-someFunction()
-someFunction(6)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
